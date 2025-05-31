@@ -62,7 +62,7 @@ WorldInfo {
   ERP 0.6
   basicTimeStep 50
   FPS 24
-  optimalThreadCount 4
+  optimalThreadCount 8
   lineScale 5
   contactProperties [
     ContactProperties {
@@ -127,8 +127,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.03364906819640917 -0.9984968708884366 0.04326359942855159 5.1290563499985495
-  position -84.88865136655018 -409.41171023939586 349.3240293468159
+  orientation -0.6713456863572336 0.027150696256473043 0.7406468855685036 3.0892322049354264
+  position 24.86544804742075 -421.5187313328396 50.62557209590388
   near 3
   follow "vehicle(7)"
 }
@@ -161,6 +161,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -181,20 +182,24 @@ RoadIntersection {
   translation 10 -420 0
   rotation 0 0 1 0.7
   name "road intersection(3)"
+  roadsWidth 9
 }
 RoadIntersection {
   translation 124 -323 0
   rotation 0 0 1 0.7
   name "road intersection(2)"
+  roadsWidth 9
 }
 RoadIntersection {
   translation 198.4 -444.2 0
   rotation 0 0 1 0.7
+  roadsWidth 9
 }
 RoadIntersection {
   translation 110.9 -435.3 0
   rotation 0 0 1 0.7
   name "road intersection(1)"
+  roadsWidth 9
 }
 DEF GRASS Pose {
   translation -388.084 -1037.65 -0.003
@@ -872,7 +877,10 @@ Road {
   id "9"
   startJunction "25"
   endJunction "11"
+  width 9
   speedLimit 13.89
+  rightBorder FALSE
+  leftBorder FALSE
   wayPoints [
     -163.1 109.1 0
     -50 -10 0
@@ -897,7 +905,10 @@ Road {
   id "10"
   startJunction "11"
   endJunction "26"
+  width 9
   speedLimit 13.89
+  rightBorder FALSE
+  leftBorder FALSE
   wayPoints [
     0.4 3.08 0
     10 14 0
@@ -921,7 +932,9 @@ Road {
   id "11"
   startJunction "9"
   endJunction "10"
+  width 9
   speedLimit 13.89
+  rightBorder FALSE
   leftBorder FALSE
   wayPoints [
     0.4 3.08 0
@@ -1032,6 +1045,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1054,6 +1068,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1076,6 +1091,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1099,6 +1115,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1122,6 +1139,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1145,6 +1163,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1169,6 +1188,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1193,6 +1213,7 @@ Road {
   id "25"
   startJunction "9"
   endJunction "14"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
   leftBorder FALSE
@@ -1215,8 +1236,10 @@ Road {
   id "26"
   startJunction "10"
   endJunction "20"
+  width 9
   speedLimit 13.89
   rightBorder FALSE
+  leftBorder FALSE
   wayPoints [
     0 -4.3 0
     -1.93 -39.24 0
@@ -3308,10 +3331,10 @@ Bench {
   name "bench(1)"
 }
 DEF AUTONOMOUS_CAR TeslaModel3 {
-  translation 91.56789510517753 -431.1065888384317 0.25767063095939247
-  rotation -0.003753653839399088 0.0003301560025955214 -0.9999929005147327 -2.980400445358308
+  translation 22 -419 0.257668
+  rotation 0.003743405757367026 -0.00426859694886753 0.9999838828668308 3.050825001079161
   name "vehicle(7)"
-  controller "<none>"
+  controller "None"
   controllerArgs [
     ""
   ]
@@ -3320,7 +3343,26 @@ DEF AUTONOMOUS_CAR TeslaModel3 {
     Camera {
       translation 0.5 0 -0.1
       rotation 0 1 0 0.05
+      name "camera_front"
       fieldOfView 1
+      width 640
+      height 320
+      antiAliasing TRUE
+    }
+    Camera {
+      translation 0.5 -0.65 -0.1
+      rotation 0 -0.21213162925534956 0.9772411022206705 -1.2
+      name "camera_right"
+      fieldOfView 2
+      width 640
+      height 320
+      antiAliasing TRUE
+    }
+    Camera {
+      translation 0.5 0.65 -0.1
+      rotation 0 0.21213162925534956 0.9772411022206705 1.2
+      name "camera_left"
+      fieldOfView 2
       width 640
       height 320
       antiAliasing TRUE
