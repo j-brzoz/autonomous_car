@@ -138,7 +138,9 @@ logging.info(f"Image transform pipeline created: Crop={CROP_HEIGHT}, Resize={RES
 tick = 0
 start_time = time.monotonic()
 prev_angle = 0.0
-
+no_line_follow_counter = 0
+MAX_BRAKE_INTENSITY = 1.0
+BRAKE_SCALING = 0.2 
 try:
 	with torch.no_grad():
 		while driver.step() != -1:
@@ -198,24 +200,37 @@ try:
 				angle = angle_tensor.item()
 
 			# 7. Control Vehicle
-            # increase progression
+			# scale angle
 			if navigation_task == "left":
-				angle = max(min(angle*1.5, 0.5), -0.5)
+				max_angle = 0.5
 			elif navigation_task == "right":
-				angle = max(min(angle*1.5, 0.7), -0.7)
-					
+				max_angle = 0.7
+			angle = max(min(angle*1.5, max_angle), (-1)*max_angle)         
+			
 			# clamp angle change to +- 0.1
 			max_angle_change = 0.1
 			angle = max(min(angle, prev_angle + max_angle_change), prev_angle - max_angle_change)
 			driver.setSteeringAngle(angle)
 			prev_angle = angle
-			
 			driver.setSteeringAngle(angle)
-			if is_line_following:
-				driver.setCruisingSpeed(1.0)
+			
+			# calculate speed based on angle
+			speed = 8 + 30 * ((max_angle-np.abs(angle))/max_angle)**4
+                  
+			# calculate if need to brake
+			if not is_line_following:
+				no_line_follow_counter += 1
+				no_line_follow_counter = min(5, no_line_follow_counter)
 			else:
-				driver.setCruisingSpeed(1.0)
-
+				no_line_follow_counter = 0
+			brake_intensity = min(MAX_BRAKE_INTENSITY, BRAKE_SCALING * no_line_follow_counter)
+			if no_line_follow_counter == 0 or driver.getCurrentSpeed() < 8:
+				driver.setCruisingSpeed(speed)
+				driver.setBrakeIntensity(0)
+			else:
+				driver.setCruisingSpeed(0)
+				driver.setBrakeIntensity(brake_intensity)
+			
 			# 8. Display & Save Video Frame (using the original size BGR frame)
 			cv2.imshow("Camera Feed", frame_for_display_front)
 			if out.isOpened():
@@ -230,7 +245,9 @@ try:
 			tick += 1
 			loop_time = time.monotonic() - loop_start_time
 			real_angle = driver.getSteeringAngle()
-			logging.info(f"Tick: {tick}, Angle: {real_angle:.4f}, Loop Time: {loop_time:.4f}s, Mode: {navigation_mode}, Probs {probs}")
+			real_speed = driver.getCurrentSpeed()
+			real_break_intensity = driver.getBrakeIntensity()
+			logging.info(f"Tick: {tick}, Speed: {real_speed:.4f}, Break: {real_break_intensity:.4f}, Angle: {real_angle:.4f}, Loop Time: {loop_time:.4f}s, Mode: {navigation_mode}")
 
 
 			# 10. Check simulation limit
