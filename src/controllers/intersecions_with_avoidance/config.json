@@ -1,0 +1,15 @@
+{
+	"num_threads": 8,
+	"time_step": 5,
+	"encoder_file_path": "models/vae_3c.pth",
+	"classifier_file_path": "models/mlp_intersection_50_3c.pth",
+	"left_file_path": "models/mlp_left_100_3c.pth",
+	"right_file_path": "models/mlp_right_100_3c.pth",
+	"straight_file_path": "models/mlp_straight_100_3c.pth",
+	"line_following_file_path": "models/mlp_line_following_100_3c.pth",
+	"yolopv2_file_path": "",
+	"output_file": "output.avi",
+	"simulation_limit": 1100,
+	"camera_mount_height_obstacle": 0.9
+}
+  
