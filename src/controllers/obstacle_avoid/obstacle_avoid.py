@@ -32,27 +32,27 @@ driver = Driver()
 TIME_STEP = int(driver.getBasicTimeStep())
 
 # Initialize devices
-camera_front = driver.getDevice("CAMERA_FRONT")
+camera_front = driver.getDevice("camera_front_obstacle")
 camera_front_height = camera_front.getHeight()
 camera_front_width = camera_front.getWidth()
 
-camera_left = driver.getDevice("CAMERA_LEFT")
+camera_left = driver.getDevice("camera_left_obstacle")
 camera_left_height = camera_left.getHeight()
 camera_left_width = camera_left.getWidth()
 
-camera_right = driver.getDevice("CAMERA_RIGHT")
+camera_right = driver.getDevice("camera_right_obstacle")
 camera_right_height = camera_right.getHeight()
 camera_right_width = camera_right.getWidth()
 
-lidar_front = driver.getDevice("LIDAR_FRONT")
+lidar_front = driver.getDevice("lidar_front_obstacle")
 lidar_front_width = lidar_front.getHorizontalResolution()
 lidar_front_height = lidar_front.getNumberOfLayers()
 
-lidar_left = driver.getDevice("LIDAR_LEFT")
+lidar_left = driver.getDevice("lidar_left_obstacle")
 lidar_left_width = lidar_left.getHorizontalResolution()
 lidar_left_height = lidar_left.getNumberOfLayers()
 
-lidar_right = driver.getDevice("LIDAR_RIGHT")
+lidar_right = driver.getDevice("lidar_right_obstacle")
 lidar_right_width = lidar_right.getHorizontalResolution()
 lidar_right_height = lidar_right.getNumberOfLayers()
 
